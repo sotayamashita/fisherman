@@ -58,22 +58,27 @@ function $fisher_cmd_name -d "fish plugin manager"
         set cache_home ~/.cache
     end
 
+    # fish の設定ファイルの場所 ~/.config/fish
     if test -z "$fish_config"
         set -g fish_config "$config_home/fish"
     end
 
+    # fisherman の設定ファイルの場所 ~/.config/fisherman
     if test -z "$fisher_config"
         set -g fisher_config "$config_home/fisherman"
     end
 
+    # fisherman のキャッシュファイルの場所 ~/.cache/fisherman
     if test -z "$fisher_cache"
         set -g fisher_cache "$cache_home/fisherman"
     end
 
+    # fisherman の ~/.config/fish/fishfile
     if test -z "$fisher_file"
         set -g fisher_file "$fish_config/fishfile"
     end
 
+    # fisherman のオプション
     switch "$argv[1]"
         case --complete
             __fisher_complete
@@ -88,6 +93,7 @@ function $fisher_cmd_name -d "fish plugin manager"
             return
     end
 
+    # fish と fisherman の設定ディレクトリ作成
     if not command mkdir -p "$fish_config/"{conf.d,functions,completions} "$fisher_config" "$fisher_cache"
         __fisher_log error "
             I couldn't create the fisherman configuration.
@@ -117,9 +123,13 @@ function $fisher_cmd_name -d "fish plugin manager"
         end
     end
 
+    # cmd 変数定義
     set -l cmd
 
+    # オプション
+    # なんでまとめないのか？
     switch "$argv[1]"
+        # インストール
         case i install
             set -e argv[1]
 
@@ -129,10 +139,12 @@ function $fisher_cmd_name -d "fish plugin manager"
                 set cmd "install"
             end
 
+        # アップデート
         case u up update
             set -e argv[1]
             set cmd "update"
 
+        # プラグインをアンインストール
         case r rm remove uninstall
             set -e argv[1]
             set cmd "rm"
@@ -2192,7 +2204,7 @@ function __fisher_self_uninstall -a yn
     functions -e $funcs $fisher_cmd_name
 end
 
-
+# Man Page
 function __fisher_man_page_write
     echo  '.
 .TH "FISHERMAN" "1" "May 2016" "" "fisherman"
