@@ -149,6 +149,7 @@ function $fisher_cmd_name -d "fish plugin manager"
             set -e argv[1]
             set cmd "rm"
 
+        #
         case l ls list
             set -e argv[1]
             set cmd "ls"
